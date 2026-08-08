@@ -1,0 +1,41 @@
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables (never commit real secrets)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
+logs/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Data / exports (raw scraped data & generated reports shouldn't be committed)
+data/
+*.xlsx
+!reporting/*.xlsx.example
+
+# Selenium driver caches
+.wdm/
