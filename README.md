@@ -1,5 +1,7 @@
 # DealDrift
 
+**Live app:** https://deal-drift-067.streamlit.app/
+
 Amazon price-intelligence and forecasting pipeline: scrape → store → clean →
 forecast → report/visualize. Built as a portfolio project for a Data Analyst
 job application, targeting `amazon.in`.
@@ -151,14 +153,3 @@ that data exists — see the caveat at the bottom of that file.
 - **Currency**: prices are stored in INR (`amazon.in`) with an explicit
   `currency` column rather than an assumed-USD default; no FX conversion is
   performed (no forex source in the approved dependency list).
-
-## Known limitations / next steps
-
-- No exploratory-analysis notebook yet — worth adding once there's more
-  accumulated data to explore.
-- Several `data_extraction/selectors.py` selectors (`DETAIL_REVIEW_COUNT`,
-  `DETAIL_LIST_PRICE_FALLBACK`, `DETAIL_IMAGE`) remain UNVERIFIED — they
-  weren't exercised by the merge path yet (only used as a fallback when the
-  search-page card already had the value).
-- Not deployed anywhere — everything above runs locally against Railway
-  MySQL, per project scope (no Streamlit Cloud push, no Docker).
