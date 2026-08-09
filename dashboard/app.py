@@ -11,6 +11,7 @@ MIN_OBSERVATIONS gate. All data is pulled live from Railway MySQL via
 dashboard/db_queries.py (raw SQL, cached with st.cache_data).
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -21,6 +22,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
+
+# On Streamlit Community Cloud there is no .env file (it's gitignored, on
+# purpose) -- secrets are configured instead via the app's Settings > Secrets
+# panel (TOML), surfaced as st.secrets. config/db_config.py only knows how to
+# read os.environ (it's shared by non-Streamlit scripts and shouldn't gain a
+# Streamlit dependency), so bridge secrets into the environment here, once,
+# before anything imports config.db_config. Locally, .env already populates
+# os.environ via python-dotenv, so st.secrets is simply empty/absent there.
+try:
+    for key in ("MYSQL_HOST", "MYSQL_PORT", "MYSQL_USER", "MYSQL_PASSWORD", "MYSQL_DATABASE", "MYSQL_CONNECT_TIMEOUT"):
+        if key in st.secrets:
+            os.environ[key] = str(st.secrets[key])
+except Exception:
+    pass  # no secrets.toml locally -- fine, .env covers it instead
 
 from dashboard.charts import build_discount_bar_chart, build_forecast_chart, build_price_history_chart, build_seller_chart
 from dashboard.db_queries import get_latest_snapshot, get_price_history, get_products, get_seller_summary
